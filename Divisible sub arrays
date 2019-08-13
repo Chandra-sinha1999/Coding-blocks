@@ -1,0 +1,28 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+#define ll long long
+ll a[1000005],b[1000005];
+int main(void)
+{
+    int n;
+    cin>>n;
+    ll sum=0;
+    memset(b,0,sizeof b);
+    b[0]=1;
+    for(int i=0;i<n;i++)
+    {
+        cin>>a[i];
+        sum+=a[i];
+        sum%=n;
+        sum=(sum+n)%n;
+        b[sum]++;
+    }
+    ll ans=0;
+    for(int i=0;i<n;i++)
+    {
+        ll no=b[i];
+        ans+=((no)*(no-1))/2;
+    }
+    cout<<ans<<endl;
+}

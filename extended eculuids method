@@ -1,0 +1,28 @@
+//it is to solve eqn of form ax+by=gcd(x,y)
+//and we have to find value of x and y
+#include<iostream>
+using namespace std;
+int x ,y,gcd;
+void extended(int a,int b)
+{
+    if(b==0)
+    {
+        x=1;
+        y=1;
+        gcd=a;
+        return;
+    }
+        extended(b,a%b);
+        int cx=y;
+        int cy=x-(a/b)*y;
+        //cout<<cx<<","<<cy<<endl;
+        x=cx;
+        y=cy;
+}
+int main(void)
+{
+    int a,b;
+    cin>>a>>b;
+    extended(a,b);
+    cout<<x<<","<<y;
+}

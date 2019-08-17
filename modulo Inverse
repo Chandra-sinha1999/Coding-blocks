@@ -1,0 +1,30 @@
+//It will give the value of B in eqn like(a.b)%m=1(gcd of a and m should be 1)
+#include<iostream>
+using namespace std;
+int x,y;
+void extended(int a, int b)
+{
+    if(b==0)
+    {
+        x=1;
+        y=1;
+        return;
+    }
+    extended(b,a%b);
+    int cx=y;
+    int cy=x-(a/b)*y;
+    x=cx;
+    y=cy;
+}
+int modulo(int a,int m)
+{
+    extended(a,m);
+    return (x+m)%m;
+}
+int main(void)
+{
+    int a,b,m;
+    cin>>a>>m;
+    b=modulo(a,m);
+    cout<<b;
+}

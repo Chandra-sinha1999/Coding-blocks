@@ -1,0 +1,57 @@
+#include<iostream>
+using namespace std;
+int swap(int a,int b)
+{
+    int c=a;
+    a=b;
+    b=c;
+    return a,b;
+}
+//for selection sort
+int sellection(int *p,int n)
+{
+    if(n==1)
+        return 0;
+    int key=0;
+    for(int i=1;i<n;i++)
+    {
+        if(p[key]>p[i])
+            {
+                int c=p[key];
+                p[key]=p[i];
+                p[i]=c;
+                key=i;
+            }
+    }
+    sellection(p,n-1);
+}
+//for bubble sort
+int bubblesort(int *p,int j,int n)
+{
+    if(n==1)
+        return 0;
+    if(j==n-1)
+        return bubblesort(p,0,n-1);
+    //recursive case
+    if(p[j]>p[j+1])
+    {
+        int c=p[j];
+        p[j]=p[j+1];
+        p[j+1]=c;
+    }
+    bubblesort(p,j+1,n);
+    return 0;
+}
+int main(void)
+{
+    int n;
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>a[i];
+    }
+    bubblesort(a,0,n);
+    for(int i=0;i<n;i++)
+        cout<<a[i]<<" ";
+}

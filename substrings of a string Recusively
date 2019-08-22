@@ -1,0 +1,23 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+void recursion(char *c,char *out,int i,int j)
+{
+    //Base case
+    if(c[i]==NULL)
+    {
+        out[j]=NULL;
+        cout<<out<<endl;
+        return;
+    }
+    //current character included
+    out[j]=c[i];
+    recursion(c,out,i+1,j+1);
+    recursion(c,out,i+1,j);
+}
+int main(void)
+{
+    char c[100],out[100];
+    cin>>c;
+    recursion(c,out,0,0);
+}

@@ -1,0 +1,78 @@
+#include<iostream>
+using namespace std;
+bool issafe(int board[][10],int i,int j,int n)
+{
+    //for column
+    for(int row=0;row<n;row++)
+    {
+        if(board[row][j]==1)
+            return false;
+    }
+    //for left diagonal
+    int x=i;
+    int y=j;
+    while(x>=0&&y>=0)
+    {
+        if(board[x][y]==1)
+            {
+                return false;
+            }
+        x--;
+        y--;
+    }
+    //for right diagonal
+    x=i;
+    y=j;
+    while(x>=0&&y<n)
+    {
+        if(board[x][y]==1)
+            return false;
+        x--;
+        y++;
+    }
+    return true;
+}
+bool print(int board[][10],int n,int i)
+{
+    //base case
+    if(i==n)
+    {
+        for(int k=0;k<n;k++)
+        {
+            for(int l=0;l<n;l++)
+            {
+                if(board[k][l]==1)
+                    cout<<"Q";
+                else
+                    cout<<"*";
+            }
+            cout<<endl;
+        }
+        cout<<endl<<endl;
+        return false;
+    }
+    //recursive case
+    for(int j=0;j<n;j++)
+    {
+        if(issafe(board,i,j,n))
+        {
+            board[i][j]=1;
+            bool nextsafe=print(board,n,i+1);
+            if(nextsafe)
+                {
+                    return true;
+                }
+            board[i][j]=0;//backtrack agar nhi rakh paa rhe aage k queens ko tb
+        }
+    }
+    //you have tried all position but could not place the queen
+    return false;
+}
+int main(void)
+{
+    int n;
+    cin>>n;
+    int board[10][10]={0};
+    print(board,n,0);
+
+}

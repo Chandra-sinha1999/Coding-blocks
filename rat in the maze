@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+bool ratinmaze(char block[10][10],int maze[10][10],int i,int j,int m,int n)
+{
+    if(i==m&&j==n)
+    {
+        maze[m][n]=1;
+        for(int i=0;i<=m;i++)
+        {
+            for(int j=0;j<=n;j++)
+                cout<<maze[i][j]<<" ";
+            cout<<endl;
+        }
+        cout<<endl;
+        return true;
+    }
+    if(i>m||j>n)
+        return false;
+    if(block[i][j]=='X')
+        return false;
+    //assuming we are at correct position
+    maze[i][j]=1;
+    bool right= ratinmaze(block,maze,i,j+1,m,n);
+    bool down= ratinmaze(block,maze,i+1,j,m,n);
+    //backtracking
+    maze[i][j]=0;
+    if(right||down)
+    {
+        return true;
+    }
+    else
+        return false;
+}
+int main(void)
+{
+    int m=4,n=4;
+    int maze[10][10]={0};
+    int x,y;
+    char block[10][10]={"0000",
+                        "00X0",
+                        "000X",
+                        "0X00"};
+    for(int i=0;i<4;i++)
+    {
+        for(int j=0;j<4;j++)
+            cout<<block[i][j];
+        cout<<endl;
+    }
+    cout<<endl;
+    ratinmaze(block,maze,0,0,m-1,n-1);
+    if(!ratinmaze)
+        cout<<"NO path exist";
+}

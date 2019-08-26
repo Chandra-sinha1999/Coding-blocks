@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+int power(int a, int b)
+{
+    if(b==0)
+        return 1;
+    if(b%2==0)
+    {
+        int ans=power(a,b/2)*power(a,b/2);
+        return ans;
+    }
+    if(b%2!=0)
+    {
+        int ans=a*power(a,b/2)*power(a,b/2);
+        return ans;
+    }
+}
+int main(void)
+{
+    int a,b;
+    cin>>a>>b;
+    cout<<power(a,b);
+}
+//printing spelling of a digit
+#include<iostream>
+#include<cstring>
+using namespace std;
+char spelling[][10]={"Zero","One","two","Three","Four","Five","Six","seven","Eight","Nine"};
+int spell(int s)
+{
+    if(s==0)
+        return 0;
+    int res=s%10;
+    spell(s/10);
+    cout<<spelling[res]<<" ";
+    /*if(res==2)
+        cout<<"two ";
+    if(res==0)
+        cout<<"zero ";
+    if(res==4)
+        cout<<"four ";
+    if(res==8)
+        cout<<"eight ";*/
+}
+int main(void)
+{
+    int c;
+    cin>>c;
+    spell(c);
+}

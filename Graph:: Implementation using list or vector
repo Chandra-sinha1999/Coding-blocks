@@ -1,0 +1,48 @@
+#include<iostream>
+#include<list>//we can use vector also
+using namespace std;
+class graph
+{
+    int V;
+    list<int> *l;//vector<int> *l; can be used
+public:
+    graph(int v)
+    {
+        V=v;
+        //array of link list
+        l=new list<int>[V];//l=new vector<int>[v]
+        //here we are making a vector or list of size v
+        //in this case the size is 5
+    }
+    void addedge(int u,int v,bool bidir=true)//we haven't passed bidir value as we are asuuming it's always true
+    {
+        l[u].push_back(v);
+        if(bidir)
+        {
+            l[v].push_back(u);
+        }
+    }
+    void printadjlist()
+    {
+        for(int i=0;i<V;i++)
+        {
+            cout<<i<<"->";
+            //l[i] is a linked list
+            list<int>::iterator ve;//vector<int>::iterator ve;
+            for(ve=l[i].begin();ve!=l[i].end();ve++)//we can't use ve<l[i] as it is non contiguos memory
+                cout<<*ve<<",";
+            cout<<endl;
+        }
+    }
+};
+int main(void)
+{
+    graph g(5) ;//here 5 is the no. of vertices we need in graph
+    g.addedge(0,1);
+    g.addedge(0,4);
+    g.addedge(4,3);
+    g.addedge(1,4);
+    g.addedge(1,2);
+    g.addedge(2,3);
+    g.printadjlist();
+}

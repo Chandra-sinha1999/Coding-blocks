@@ -1,0 +1,45 @@
+#include<iostream>
+#include<list>
+#include<map>
+using namespace std;
+template<typename T>
+class graph
+{
+    map<T,list<T> > adjlist;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)//we haven't passed bidir value as we are asuuming it's always true
+    {
+        adjlist[u].push_back(v);
+        if(bidir)
+        {
+            adjlist[v].push_back(u);
+        }
+    }
+    void printadjlist()
+    {
+        map<int,list<int> >::iterator i;//this was not needed in case we had used auto
+        for(i=adjlist.begin();i!=adjlist.end();i++)//we could have used for(auto i: adjlist)
+        {
+            cout<<i->first<<"->";
+            list<int> :: iterator j;//this was not needed in case we had used auto
+            for(j=(i->second).begin();j!=(i->second).end();j++)//we could have used for(auto j: i->second)
+                cout<<*j<<",";
+            cout<<endl;
+        }
+    }
+};
+int main(void)
+{
+    graph<int> g;
+    g.addedge(0,1);
+    g.addedge(0,4);
+    g.addedge(4,3);
+    g.addedge(1,4);
+    g.addedge(1,2);
+    g.addedge(2,3);
+    g.printadjlist();
+}

@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+class graph{
+map<int,list<int> > m;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)
+    {
+        m[u].push_back(v);
+        if(bidir)
+            m[v].push_back(u);
+    }
+    void bfs(int x)
+    {
+        queue<int> q;
+        map<int,bool> vis;
+        q.push(x);
+        vis[x]=true;
+        while(!q.empty())
+        {
+            int node=q.front();
+            cout<<node<<" ";
+            q.pop();
+        list<int>:: iterator i;
+        for(i=m[node].begin();i!=m[node].end();i++)
+        {
+
+            if(!vis[*i])
+            {
+                q.push(*i);
+                vis[*i]=true;
+            }
+        }
+        }
+    }
+};
+int main(void)
+{
+    graph g;
+    g.addedge(0,1);
+    g.addedge(0,4);
+    g.addedge(4,3);
+    g.addedge(1,4);
+    g.addedge(1,2);
+    g.addedge(2,3);
+    g.bfs(0);
+}

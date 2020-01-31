@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+class graph
+{
+    map<int,list<int> > m;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)
+    {
+        m[u].push_back(v);
+        if(bidir)
+            m[v].push_back(u);
+    }
+    void dfshelper(int node,map<int,bool> &vis)
+    {
+        list<int> :: iterator i;
+        cout<<node<<" ";
+        vis[node]=true;
+        for(i=m[node].begin();i!=m[node].end();i++)
+        {
+            if(vis[*i]==false)
+            {
+                dfshelper(*i,vis);
+            }
+        }
+    }
+    void dfs(int src)
+    {
+        map<int,bool> vis;
+        dfshelper(src,vis);
+        map<int,list<int> > :: iterator i;
+        int count=1;
+        for(i=m.begin();i!=m.end();i++)
+        {
+            int x=i->first;
+            if(!vis[x])
+            {
+                count++;
+                dfshelper(x,vis);
+            }
+        }
+        cout<<endl;
+        cout<<"The connected component of the graph are "<<count;
+    }
+};
+int main(void)
+{
+    graph g;
+    g.addedge(1,2);
+    g.addedge(1,3);
+    g.addedge(2,4);
+    g.addedge(3,4);
+    g.addedge(4,5);
+    g.addedge(6,7);
+    g.dfs(1);
+}

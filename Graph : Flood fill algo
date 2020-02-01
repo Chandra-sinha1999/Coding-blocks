@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+int r,c;
+void floodfill(char a[][10],int i,int j,char ch,char color)
+{
+    //matrix boundary
+    if(i<0||j<0||i>=r||j>=c)
+        return;
+    //boundary for charachter
+    if(a[i][j]!=ch)
+        return;
+    a[i][j]=color;
+    floodfill(a,i-1,j,ch,color);
+    floodfill(a,i+1,j,ch,color);
+    floodfill(a,i,j-1,ch,color);
+    floodfill(a,i,j+1,ch,color);
+}
+int main(void)
+{
+    cin>>r>>c;
+    char a[5][10];
+    for(int i=0;i<5;i++)
+    {
+        for(int j=0;j<10;j++)
+        {
+            cin>>a[i][j];
+        }
+    }
+    int i,j;
+    cin>>i>>j;
+    char ch=a[i][j];
+    cout<<endl;
+    floodfill(a,i,j,ch,'r');
+    for(int i=0;i<5;i++)
+    {
+        for(int j=0;j<10;j++)
+        {
+            cout<<a[i][j];
+        }
+        cout<<endl;
+    }
+}

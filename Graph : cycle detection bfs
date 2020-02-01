@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+class graph
+{
+    map<int,list<int> > m;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)
+    {
+        m[u].push_back(v);
+        if(bidir)
+            m[v].push_back(u);
+    }
+    void bfs(int src)
+    {
+        queue<int> q;
+        map<int,bool> vis;
+        map<int,int> par;
+        q.push(src);
+        vis[src]=true;
+        par[src]=src;
+        map<int, list<int> > :: iterator i;
+        list<int> :: iterator j;
+        int z=0;
+        while(!q.empty())
+        {
+            int node=q.front();
+            cout<<node<<" ";
+            q.pop();
+            for(j=m[node].begin();j!=m[node].end();j++)
+            {
+                if(vis[*j]==false)
+                {
+                    par[*j]=node;
+                    q.push(*j);
+                    vis[*j]=true;
+                }
+                else if(vis[*j]==true&&par[node]!=*j)
+                {
+                    z=1;
+                }
+            }
+        }
+        if(z==1)
+        {
+            cout<<endl<<"cycle detected";
+        }
+        else
+            cout<<endl<<"NO cycle";
+    }
+};
+int main(void)
+{
+    graph g;
+    g.addedge(1,2);
+    g.addedge(1,3);
+    g.addedge(2,4);
+    g.addedge(3,4);
+    g.addedge(3,5);
+    g.bfs(1);
+}

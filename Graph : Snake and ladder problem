@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+using namespace std;
+class graph
+{
+    map<int,list<int> > m;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)
+    {
+        m[u].push_back(v);
+        if(bidir)
+            m[v].push_back(u);
+    }
+    int bfs(int x,int des)
+    {
+        queue<int> q;
+        map<int,int> dis;
+        map<int,int> par;
+        map<int,list<int> > :: iterator j;
+        for(j=m.begin();j!=m.end();j++)
+        {
+            dis[j->first]=INT_MAX;
+        }
+        q.push(x);
+        dis[x]=0;
+        par[x]=x;
+        while(!q.empty())
+        {
+            int node=q.front();
+            q.pop();
+            //cout<<node<<" ";
+            list<int> :: iterator i;
+            for(i=m[node].begin();i!=m[node].end();i++)
+            {
+                if(dis[*i]==INT_MAX)
+                {
+                    q.push(*i);
+                    dis[*i]=dis[node]+1;
+                    par[*i]=node;
+                }
+            }
+        }
+        cout<<endl;
+        map<int,list<int> > :: iterator k;
+        /*for(k=m.begin();k!=m.end();k++)
+        {
+            int node=k->first;
+            cout<<node<<" "<<dis[node]<<endl;
+        }*/
+        int temp=des;
+        while(temp!=x)
+        {
+            cout<<temp<<"<---";
+            temp=par[temp];
+        }
+        cout<<temp<<endl;
+        return dis[des];
+    }
+};
+int main(void)
+{
+    int board[40]={0};
+    board[2]=13;
+    board[5]=2;
+    board[17]=-13;
+    board[18]=11;
+    board[20]=-14;
+    board[24]=-8;
+    board[25]=10;
+    board[32]=-2;
+    board[34]=-22;
+    graph g;
+    for(int i=0;i<=36;i++)
+    {
+        for(int j=1;j<=6;j++)
+        {
+            int x=i+j+board[i+j];
+            g.addedge(i,x,false);
+        }
+    }
+    cout<<g.bfs(0,36);
+}

@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+using namespace std;
+class graph{
+map<int,list<int> > m;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)
+    {
+        m[u].push_back(v);
+        if(bidir)
+           {
+               m[v].push_back(u);
+           }
+    }
+    void bfs()
+    {
+        queue<int> q;
+        map<int,bool> vis;
+        map<int,int> indegree;
+        map<int,list<int> > :: iterator i;
+        list<int> :: iterator n;
+        map<int,bool>:: iterator j;
+        map<int,int>:: iterator k;
+        for(i=m.begin();i!=m.end();i++)
+        {
+            int node=i->first;
+            indegree[node]=0;
+            vis[node]=false;
+        }
+        for(i=m.begin();i!=m.end();i++)
+        {
+            int node=i->first;
+            for(n=m[node].begin();n!=m[node].end();n++)
+            {
+                int x=*n;
+                indegree[x]++;
+            }
+        }
+        for(i=m.begin();i!=m.end();i++)
+        {
+            int node=i->first;
+            if(indegree[node]==0)
+            {
+                q.push(node);
+                vis[node]=true;
+            }
+        }
+        while(!q.empty())
+        {
+            int node=q.front();
+            q.pop();
+            cout<<node<<" ";
+            vis[node]=true;
+            for(n=m[node].begin();n!=m[node].end();n++)
+            {
+                int x=*n;
+                indegree[x]--;
+                if(indegree[x]==0)
+                    q.push(x);
+            }
+        }
+    }
+};
+int main(void)
+{
+     graph g;
+    g.addedge(1,4,false);
+    g.addedge(1,3,false);
+    g.addedge(2,3,false);
+    g.addedge(3,4,false);
+    g.addedge(3,6,false);
+    g.addedge(3,5,false);
+    g.addedge(3,9,false);
+    g.addedge(4,8,false);
+    g.addedge(5,7,false);
+    g.addedge(6,7,false);
+    g.addedge(8,9,false);
+    g.addedge(9,7,false);
+    g.bfs();
+}

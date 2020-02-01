@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+class graph{
+map<int,list<int> > m;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)
+    {
+        m[u].push_back(v);
+        if(bidir)
+            m[v].push_back(u);
+    }
+    int dfshelper(int node,map<int,bool> &vis,map<int,int> &par,int res)
+    {
+        vis[node]=true;
+        cout<<node<<" ";
+        list<int> :: iterator i;
+        for(i=m[node].begin();i!=m[node].end();i++)
+        {
+            if(vis[*i]==false)
+            {
+                par[*i]=node;
+                res=dfshelper(*i,vis,par,res);
+            }
+            else if(vis[*i]==true&&par[node]!=*i)
+            {
+                res=1;
+            }
+        }
+        return res;
+    }
+    void dfs(int src)
+    {
+        map<int,bool> vis;
+        map<int,int> par;
+        par[src]=src;
+        int res=0;
+        res=dfshelper(src,vis,par,res);
+        if(res==0)
+        {
+            cout<<endl<<"NO Cycle";
+        }
+        else
+            cout<<endl<<"Cycle detected";
+    }
+};
+int main(void)
+{
+    graph g;
+    g.addedge(1,2);
+    g.addedge(1,3);
+    g.addedge(2,4);
+    g.addedge(3,4);
+    g.addedge(3,5);
+    g.dfs(1);
+}

@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+class graph{
+map<int,list<int> > m;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)
+    {
+        m[u].push_back(v);
+        if(bidir)
+           m[v].push_back(u);
+    }
+    void dfshelper(int node,map<int,bool> &vis,stack<int> &s)
+    {
+        vis[node]=true;
+        list<int> :: iterator i;
+        for(i=m[node].begin();i!=m[node].end();i++)
+        {
+            if(vis[*i]==false)
+                dfshelper(*i,vis,s);
+        }
+        s.push(node);
+    }
+    void dfstopological()
+    {
+        map<int,bool> vis;
+        stack<int> s;
+        map<int,list<int> > :: iterator i;
+        for(i=m.begin();i!=m.end();i++)
+        {
+            int src=i->first;
+            if(!vis[src])
+               dfshelper(src,vis,s);
+        }
+        while(!s.empty())
+        {
+            cout<<s.top()<<" ";
+            s.pop();
+        }
+    }
+};
+int main(void)
+{
+    graph g;
+    g.addedge(1,4,false);
+    g.addedge(1,3,false);
+    g.addedge(2,3,false);
+    g.addedge(3,4,false);
+    g.addedge(3,6,false);
+    g.addedge(3,5,false);
+    g.addedge(3,9,false);
+    g.addedge(4,8,false);
+    g.addedge(5,7,false);
+    g.addedge(6,7,false);
+    g.addedge(8,9,false);
+    g.addedge(9,7,false);
+    g.dfstopological();
+}

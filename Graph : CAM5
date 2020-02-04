@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+using namespace std;
+class graph
+{
+    map<int,list<int> > m;
+public:
+    graph()
+    {
+
+    }
+    void addedge(int u,int v,bool bidir=true)
+    {
+        m[u].push_back(v);
+        if(bidir)
+            m[v].push_back(u);
+    }
+    void dfshelper(int node,map<int,bool> &vis,int &siz)
+    {
+        list<int> :: iterator i;
+        //cout<<node<<" ";
+        vis[node]=true;
+        siz++;
+        for(i=m[node].begin();i!=m[node].end();i++)
+        {
+            if(vis[*i]==false)
+            {
+                dfshelper(*i,vis,siz);
+            }
+        }
+    }
+    void dfs(int n)
+    {
+        map<int,bool> vis;
+        int count=0;
+        int siz=0;
+        map<int,list<int> > :: iterator i;
+        for(i=m.begin();i!=m.end();i++)
+        {
+            int node=i->first;
+            if(vis[node]==false)
+              {
+                  count++;
+                  dfshelper(node,vis,siz);
+              }
+        }
+        //cout<<count<<" "<<siz;
+        cout<<(n-siz+count)<<endl;
+    }
+};
+int main(void)
+{
+ int t;
+ cin>>t;
+ while(t--)
+ {
+     int n;
+     cin>>n;
+     int e;
+     cin>>e;
+     if(e==0)
+     {
+         cout<<n;
+     }
+     else
+     {
+        int a[e*2];
+        for(int i=0;i<(e*2);i++)
+        {
+            cin>>a[i];
+        }
+        graph g;
+        for(int i=0;i<(e*2);i+=2)
+        {
+            g.addedge(a[i],a[i+1]);
+        }
+        g.dfs(n);
+     }
+ }
+}
+
